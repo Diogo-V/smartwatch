@@ -206,12 +206,12 @@ function mousePressed()
       //}
 
       if (current_state == "main"){
-        if (mouseClickWithin(width / 2 - BT_WIDTH_LONG, height / 2 - PPCM, BT_WIDTH_LONG, BT_HEIGHT)){
+        if (mouseClickWithin(width / 2 - 2.0 * PPCM, height / 2 - PPCM + BT_HEIGHT, BT_HEIGHT, BT_WIDTH_SHORT)){
           current_state = "ABC";
           console.log("State changed to ABC");
         }
 
-        else if (mouseClickWithin(width / 2 - 2.0 * PPCM, height / 2 - PPCM + BT_HEIGHT, BT_HEIGHT, BT_WIDTH_LONG)){
+        else if (mouseClickWithin(width / 2 - 2.0 * PPCM + BT_HEIGHT, height / 2 - PPCM, BT_WIDTH_LONG, BT_HEIGHT)){
           current_state = "DEF";
           console.log("State changed to DEF");
         }
@@ -221,14 +221,29 @@ function mousePressed()
           console.log("State changed to GHI");
         }
 
-        else if (mouseClickWithin(width / 2 + BT_WIDTH_LONG, height / 2 - PPCM + BT_HEIGHT, BT_HEIGHT, BT_WIDTH_LONG)){
+        else if (mouseClickWithin(width / 2 + 2.0 * PPCM - BT_HEIGHT, height / 2 - PPCM + BT_HEIGHT, BT_HEIGHT, BT_WIDTH_SHORT)){
           current_state = "JKL";
           console.log("State changed to JKL");
         }
 
-        else if (mouseClickWithin(width / 2 + BT_WIDTH_LONG, height / 2, BT_HEIGHT, BT_WIDTH_LONG)){
+        else if (mouseClickWithin(width / 2 + 2.0 * PPCM - BT_HEIGHT, height / 2 + PPCM / 2, BT_HEIGHT, BT_WIDTH_SHORT)){
           current_state = "MNO";
           console.log("State changed to MNO");
+        }
+
+        else if (mouseClickWithin(width / 2, height / 2 + 2.0 * PPCM - BT_HEIGHT, BT_WIDTH_LONG, BT_HEIGHT)){
+          current_state = "PQRS";
+          console.log("State changed to PQRS");
+        }
+
+        else if (mouseClickWithin(width / 2 - 2.0 * PPCM + BT_HEIGHT, height / 2 + 2.0 * PPCM - BT_HEIGHT, BT_WIDTH_LONG, BT_HEIGHT)){
+          current_state = "TUVW";
+          console.log("State changed to TUVW");
+        }
+
+        else if (mouseClickWithin(width / 2 - 2.0 * PPCM, height / 2 + PPCM / 2, BT_HEIGHT, BT_WIDTH_SHORT)){
+          current_state = "XYZ";
+          console.log("State changed to XYZ");
         }
       }
 
