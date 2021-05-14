@@ -24,7 +24,7 @@ let ARM_LENGTH, ARM_HEIGHT;    // arm size and position (calculated after enteri
 let draw_finger_arm  = false;  // used to control what to show in draw()
 let phrases          = [];     // contains all 501 phrases that can be asked of the user
 let current_trial    = 0;      // the current trial out of 2 phrases (indexes into phrases array above)
-let attempt          = 0       // the current attempt out of 2 (to account for practice)
+let attempt          = 0       // the current attempt out of 2 -> to account for practice
 let target_phrase    = "";     // the current target phrase
 let currently_typed  = "";     // what the user has typed so far
 let entered          = new Array(2); // array to store the result of the two trials (i.e., the two phrases entered in one attempt)
@@ -115,6 +115,11 @@ function draw2Dkeyboard()
   imageMode(CORNER);
   image(leftArrow, width/2 - ARROW_SIZE, height/2, ARROW_SIZE, ARROW_SIZE);
   image(rightArrow, width/2, height/2, ARROW_SIZE, ARROW_SIZE);  
+}
+
+// Gets words that resemble the most the word that is being written
+function autocomplete() {
+
 }
 
 // Evoked when the mouse button was pressed
