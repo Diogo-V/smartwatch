@@ -246,6 +246,8 @@ function mousePressed()
           console.log("State changed to XYZ");
         }
       }
+      else
+        current_state = "main"; //DEBUG
 
     }
 
