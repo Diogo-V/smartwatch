@@ -43,6 +43,20 @@ let leftArrow, rightArrow;     // holds the left and right UI images for our bas
 let ARROW_SIZE;                // UI button size
 let current_letter = 'a';      // current char being displayed on our basic 2D keyboard (starts with 'a')
 
+//Our keyboard
+let img_kb_MAIN;
+let img_kb_ABC;
+let img_kb_DEF;
+let img_kb_GHI;
+let img_kb_JKL;
+let img_kb_MNO;
+let img_kb_PQRS;
+let img_kb_TUVW;
+let img_kb_XYZ;
+
+// Current state
+let current_state = "main";
+
 // Runs once before the setup() and loads our data (images, phrases)
 function preload()
 {
@@ -56,6 +70,17 @@ function preload()
   // Loads UI elements for our basic keyboard
   leftArrow = loadImage("data/left.png");
   rightArrow = loadImage("data/right.png");
+
+  //Loads custom keyboards
+  img_kb_MAIN = loadImage("keyboards/MainKeyboard.png");
+  img_kb_ABC = loadImage("keyboards/AuxKeyboard3_ABC.png");
+  img_kb_DEF = loadImage("keyboards/AuxKeyboard3_DEF.png");
+  img_kb_GHI = loadImage("keyboards/AuxKeyboard3_GHI.png");
+  img_kb_JKL = loadImage("keyboards/AuxKeyboard3_JKL.png");
+  img_kb_MNO = loadImage("keyboards/AuxKeyboard3_MNO.png");
+  img_kb_PQRS = loadImage("keyboards/AuxKeyboard4_PQRS.png");
+  img_kb_TUVW = loadImage("keyboards/AuxKeyboard4_TUVW.png");
+  img_kb_XYZ = loadImage("keyboards/AuxKeyboard3_XYZ.png");
 }
 
 // Runs once at the start
@@ -105,16 +130,22 @@ function draw()
 // Draws 2D keyboard UI (current letter and left and right arrows)
 function draw2Dkeyboard()
 {
-  // Writes the current letter
-  textFont("Arial", 24);
-  fill(0);
-  text("" + current_letter, width/2, height/2);
+  ///Writes the current letter
+  //textFont("Arial", 24);
+  //fill(0);
+  //text("" + current_letter, width/2, height/2);
 
-  // Draws and the left and right arrow buttons
-  noFill();
-  imageMode(CORNER);
-  image(leftArrow, width/2 - ARROW_SIZE, height/2, ARROW_SIZE, ARROW_SIZE);
-  image(rightArrow, width/2, height/2, ARROW_SIZE, ARROW_SIZE);
+  ///Draws and the left and right arrow buttons
+  //noFill();
+  //imageMode(CORNER);
+  //image(leftArrow, width/2 - ARROW_SIZE, height/2, ARROW_SIZE, ARROW_SIZE);
+  //image(rightArrow, width/2, height/2, ARROW_SIZE, ARROW_SIZE);
+
+  imageMode(CENTER);
+
+  if (current_state == "main")
+    image(img_kb_MAIN, width / 2, height / 2 + 0.5 * PPCM, 4.0 * PPCM, 3.0 * PPCM);
+
 }
 
 // Evoked when the mouse button was pressed
