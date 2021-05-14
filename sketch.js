@@ -56,6 +56,9 @@ let img_kb_XYZ;
 
 // Current state
 let current_state = "main";
+let BT_HEIGHT;
+let BT_WIDTH_SHORT;
+let BT_WIDTH_LONG;
 
 // Runs once before the setup() and loads our data (images, phrases)
 function preload()
@@ -146,6 +149,30 @@ function draw2Dkeyboard()
   if (current_state == "main")
     image(img_kb_MAIN, width / 2, height / 2 + 0.5 * PPCM, 4.0 * PPCM, 3.0 * PPCM);
 
+  else if (current_state == "ABC")
+    image(img_kb_ABC, width / 2, height / 2 + 0.5 * PPCM, 4.0 * PPCM, 3.0 * PPCM);
+
+  else if (current_state == "DEF")
+    image(img_kb_DEF, width / 2, height / 2 + 0.5 * PPCM, 4.0 * PPCM, 3.0 * PPCM);
+
+  else if (current_state == "GHI")
+    image(img_kb_GHI, width / 2, height / 2 + 0.5 * PPCM, 4.0 * PPCM, 3.0 * PPCM);
+
+  else if (current_state == "JKL")
+    image(img_kb_JKL, width / 2, height / 2 + 0.5 * PPCM, 4.0 * PPCM, 3.0 * PPCM);
+
+  else if (current_state == "MNO")
+    image(img_kb_MNO, width / 2, height / 2 + 0.5 * PPCM, 4.0 * PPCM, 3.0 * PPCM);
+
+  else if (current_state == "PQRS")
+    image(img_kb_PQRS, width / 2, height / 2 + 0.5 * PPCM, 4.0 * PPCM, 3.0 * PPCM);
+
+  else if (current_state == "TUVW")
+    image(img_kb_TUVW, width / 2, height / 2 + 0.5 * PPCM, 4.0 * PPCM, 3.0 * PPCM);
+
+  else if (current_state == "XYZ")
+    image(img_kb_XYZ, width / 2, height / 2 + 0.5 * PPCM, 4.0 * PPCM, 3.0 * PPCM);
+
 }
 
 // Evoked when the mouse button was pressed
@@ -158,25 +185,53 @@ function mousePressed()
     if(mouseClickWithin(width/2 - 2.0*PPCM, height/2 - 1.0*PPCM, 4.0*PPCM, 3.0*PPCM))
     {
       // Check if mouse click was on left arrow (2D keyboard)
-      if (mouseClickWithin(width/2 - ARROW_SIZE, height/2, ARROW_SIZE, ARROW_SIZE))
-      {
-        current_letter = getPreviousChar(current_letter);
-        if (current_letter.charCodeAt(0) < '_'.charCodeAt(0)) current_letter = 'z';  // wrap around to z
+      //if (mouseClickWithin(width/2 - ARROW_SIZE, height/2, ARROW_SIZE, ARROW_SIZE))
+      //{
+        //current_letter = getPreviousChar(current_letter);
+        //if (current_letter.charCodeAt(0) < '_'.charCodeAt(0)) current_letter = 'z';  // wrap around to z
+      //}
+      //// Check if mouse click was on right arrow (2D keyboard)
+      //else if (mouseClickWithin(width/2, height/2, ARROW_SIZE, ARROW_SIZE))
+      //{
+        //current_letter = getNextChar(current_letter);
+        //if (current_letter.charCodeAt(0) > 'z'.charCodeAt(0)) current_letter = '_'; // wrap back to space (i.e., the underscore)
+      //}
+      //else
+      //{
+        //// Click in whitespace indicates a character input (2D keyboard)
+        //if (current_letter == '_') currently_typed += " ";                          // if underscore, consider that a space bar
+        //else if (current_letter == '`' && currently_typed.length > 0)               // if `, treat that as delete
+          //currently_typed = currently_typed.substring(0, currently_typed.length - 1);
+        //else if (current_letter != '`') currently_typed += current_letter;          // if not any of the above cases, add the current letter to the entered phrase
+      //}
+
+      if (current_state == "main"){
+        if (mouseClickWithin(width / 2 - BT_WIDTH_LONG, height / 2 - PPCM, BT_WIDTH_LONG, BT_HEIGHT)){
+          current_state = "ABC";
+          console.log("State changed to ABC");
+        }
+
+        else if (mouseClickWithin(width / 2 - 2.0 * PPCM, height / 2 - PPCM + BT_HEIGHT, BT_HEIGHT, BT_WIDTH_LONG)){
+          current_state = "DEF";
+          console.log("State changed to DEF");
+        }
+
+        else if (mouseClickWithin(width / 2, height / 2 - PPCM, BT_WIDTH_LONG, BT_HEIGHT)){
+          current_state = "GHI";
+          console.log("State changed to GHI");
+        }
+
+        else if (mouseClickWithin(width / 2 + BT_WIDTH_LONG, height / 2 - PPCM + BT_HEIGHT, BT_HEIGHT, BT_WIDTH_LONG)){
+          current_state = "JKL";
+          console.log("State changed to JKL");
+        }
+
+        else if (mouseClickWithin(width / 2 + BT_WIDTH_LONG, height / 2, BT_HEIGHT, BT_WIDTH_LONG)){
+          current_state = "MNO";
+          console.log("State changed to MNO");
+        }
       }
-      // Check if mouse click was on right arrow (2D keyboard)
-      else if (mouseClickWithin(width/2, height/2, ARROW_SIZE, ARROW_SIZE))
-      {
-        current_letter = getNextChar(current_letter);
-        if (current_letter.charCodeAt(0) > 'z'.charCodeAt(0)) current_letter = '_'; // wrap back to space (i.e., the underscore)
-      }
-      else
-      {
-        // Click in whitespace indicates a character input (2D keyboard)
-        if (current_letter == '_') currently_typed += " ";                          // if underscore, consider that a space bar
-        else if (current_letter == '`' && currently_typed.length > 0)               // if `, treat that as delete
-          currently_typed = currently_typed.substring(0, currently_typed.length - 1);
-        else if (current_letter != '`') currently_typed += current_letter;          // if not any of the above cases, add the current letter to the entered phrase
-      }
+
     }
 
     // Check if mouse click happened within 'ACCEPT'
@@ -321,7 +376,10 @@ function windowResized()
   ARM_LENGTH    = (int)(19   * PPCM);
   ARM_HEIGHT    = (int)(11.2 * PPCM);
 
-  ARROW_SIZE    = (int)(2.2 * PPCM);
+  //ARROW_SIZE     = (int)(2.2  * PPCM);
+  BT_HEIGHT      = (int)(0.72 * PPCM);
+  BT_WIDTH_SHORT = (int)(0.78 * PPCM);
+  BT_WIDTH_LONG  = (int)(1.26 * PPCM);
 
   // Starts drawing the watch immediately after we go fullscreen (DO NO CHANGE THIS!)
   draw_finger_arm = true;
