@@ -245,9 +245,191 @@ function mousePressed()
           current_state = "XYZ";
           console.log("State changed to XYZ");
         }
+
+        else if(mouseClickWithin(width / 2 - 1.3* PPCM, height / 2 + 0.7*PPCM, BT_HEIGHT, BT_HEIGHT)){
+          currently_typed += ' ';
+        }
+
+        else if(mouseClickWithin(width / 2 + PPCM/3, height / 2 + 0.7 *PPCM, BT_HEIGHT, BT_HEIGHT)){
+          currently_typed = currently_typed.substring(0, currently_typed.length - 1);
+        }
       }
+
+      else if(current_state == "ABC"){
+        if (mouseClickWithin(width / 2 - 2.0 * PPCM, height / 2 - 0.5 * PPCM, BT_WIDTH_LONG, 3.0 * PPCM)){
+          currently_typed += 'a';
+        }
+
+        else if (mouseClickWithin(width / 2 - 2.0 * PPCM + BT_WIDTH_LONG, height / 2 - 0.5 * PPCM, BT_WIDTH_LONG, 3.0 * PPCM)){
+          currently_typed += 'b';
+        }
+
+        else if (mouseClickWithin(width / 2 - 2.0 * PPCM + 2*BT_WIDTH_LONG, height / 2 - 0.5 * PPCM, BT_WIDTH_LONG, 3.0 * PPCM)){
+          currently_typed += 'c';
+        }
+
+        current_state = "main";
+      }
+
+      else if(current_state == "DEF"){
+        if (mouseClickWithin(width / 2 - 2.0 * PPCM, height / 2 - 0.5 * PPCM, BT_WIDTH_LONG, 3.0 * PPCM)){
+          currently_typed += 'd';
+          current_state = "main";
+        }
+
+        else if (mouseClickWithin(width / 2 - 2.0 * PPCM + BT_WIDTH_LONG, height / 2 - 0.5 * PPCM, BT_WIDTH_LONG, 3.0 * PPCM)){
+          currently_typed += 'e';
+          current_state = "main";
+        }
+
+        else if (mouseClickWithin(width / 2 - 2.0 * PPCM + 2*BT_WIDTH_LONG, height / 2 - 0.5 * PPCM, BT_WIDTH_LONG, 3.0 * PPCM)){
+          currently_typed += 'f';
+          current_state = "main";
+        }
+
+        else{
+        current_state = "main";
+        }
+      }
+
+      else if(current_state == "GHI"){
+        if (mouseClickWithin(width / 2 - 2.0 * PPCM, height / 2 - 0.5 * PPCM, BT_WIDTH_LONG, 3.0 * PPCM)){
+          currently_typed += 'g';
+          current_state = "main";
+        }
+
+        else if (mouseClickWithin(width / 2 - 2.0 * PPCM + BT_WIDTH_LONG, height / 2 - 0.5 * PPCM, BT_WIDTH_LONG, 3.0 * PPCM)){
+          currently_typed += 'h';
+          current_state = "main";
+        }
+
+        else if (mouseClickWithin(width / 2 - 2.0 * PPCM + 2*BT_WIDTH_LONG, height / 2 - 0.5 * PPCM, BT_WIDTH_LONG, 3.0 * PPCM)){
+          currently_typed += 'i';
+          current_state = "main";
+        }
+
+        else{
+          current_state = "main";
+        }
+      }
+
+      else if(current_state == "JKL"){
+        if (mouseClickWithin(width / 2 - 2.0 * PPCM, height / 2 - 0.5 * PPCM, BT_WIDTH_LONG, 3.0 * PPCM)){
+          currently_typed += 'j';
+          current_state = "main";
+        }
+
+        else if (mouseClickWithin(width / 2 - 2.0 * PPCM + BT_WIDTH_LONG, height / 2 - 0.5 * PPCM, BT_WIDTH_LONG, 3.0 * PPCM)){
+          currently_typed += 'k';
+          current_state = "main";
+        }
+
+        else if (mouseClickWithin(width / 2 - 2.0 * PPCM + 2*BT_WIDTH_LONG, height / 2 - 0.5 * PPCM, BT_WIDTH_LONG, 3.0 * PPCM)){
+          currently_typed += 'l';
+          current_state = "main";
+        }
+
+        else{
+          current_state = "main";
+        }
+      }
+
+      else if(current_state == "MNO"){
+        if (mouseClickWithin(width / 2 - 2.0 * PPCM, height / 2 - 0.5 * PPCM, BT_WIDTH_LONG, 3.0 * PPCM)){
+          currently_typed += 'm';
+          current_state = "main";
+        }
+
+        else if (mouseClickWithin(width / 2 - 2.0 * PPCM + BT_WIDTH_LONG, height / 2 - 0.5 * PPCM, BT_WIDTH_LONG, 3.0 * PPCM)){
+          currently_typed += 'n';
+          current_state = "main";
+        }
+
+        else if (mouseClickWithin(width / 2 - 2.0 * PPCM + 2*BT_WIDTH_LONG, height / 2 - 0.5 * PPCM, BT_WIDTH_LONG, 3.0 * PPCM)){
+          currently_typed += 'o';
+          current_state = "main";
+        }
+
+        else{
+          current_state = "main";
+        }
+      }
+
+      else if(current_state == "PQRS"){
+        if (mouseClickWithin(width / 2 - 2.5 * PPCM, height / 2 - 2 * PPCM, BT_WIDTH_LONG + BT_WIDTH_LONG/2, 2.5 * PPCM)) {
+          currently_typed += "p";
+          current_state = "main";
+        } 
+
+        else if (mouseClickWithin(width / 2, height / 2 - 2 * PPCM, BT_WIDTH_LONG + BT_WIDTH_LONG/2, 2.5 * PPCM)) {
+          currently_typed += "q";
+          current_state = "main";
+        } 
+
+        else if (mouseClickWithin(width / 2 - 2.5 * PPCM, height / 2, BT_WIDTH_LONG + BT_WIDTH_LONG/2, 2.5 * PPCM)) {
+          currently_typed += "r";
+          current_state = "main";
+        } 
+
+        else if (mouseClickWithin(width / 2, height / 2, BT_WIDTH_LONG + BT_WIDTH_LONG/2, 2.5 * PPCM)) {
+          currently_typed += "s";
+          current_state = "main";
+        } 
+
+        else {
+          current_state = "main";
+        }
+      }
+
+      else if(current_state == "TUVW"){
+        if (mouseClickWithin(width / 2 - 2.5 * PPCM, height / 2 - 2 * PPCM, BT_WIDTH_LONG + BT_WIDTH_LONG/2, 2.5 * PPCM)) {
+          currently_typed += "t";
+          current_state = "main";
+        } 
+
+        else if (mouseClickWithin(width / 2, height / 2 - 2 * PPCM, BT_WIDTH_LONG + BT_WIDTH_LONG/2, 2.5 * PPCM)) {
+          currently_typed += "u";
+          current_state = "main";
+        } 
+
+        else if (mouseClickWithin(width / 2 - 2.5 * PPCM, height / 2, BT_WIDTH_LONG + BT_WIDTH_LONG/2, 2.5 * PPCM)) {
+          currently_typed += "v";
+          current_state = "main";
+        } 
+
+        else if (mouseClickWithin(width / 2, height / 2, BT_WIDTH_LONG + BT_WIDTH_LONG/2, 2.5 * PPCM)) {
+          currently_typed += "w";
+          current_state = "main";
+        } 
+
+        else{
+          current_state = "main";
+        }
+      }
+
+      else if(current_state == "XYZ"){
+        if (mouseClickWithin(width / 2 - 2.0 * PPCM, height / 2 - 0.5 * PPCM, BT_WIDTH_LONG, 3.0 * PPCM)){
+          currently_typed += 'x';
+          current_state = "main";
+        }
+        else if (mouseClickWithin(width / 2 - 2.0 * PPCM + BT_WIDTH_LONG, height / 2 - 0.5 * PPCM, BT_WIDTH_LONG, 3.0 * PPCM)){
+          currently_typed += 'y';
+          current_state = "main";
+        }
+
+        else if (mouseClickWithin(width / 2 - 2.0 * PPCM + 2*BT_WIDTH_LONG, height / 2 - 0.5 * PPCM, BT_WIDTH_LONG, 3.0 * PPCM)){
+          currently_typed += 'z';
+          current_state = "main";
+        }
+
+        else{
+          current_state = "main";
+        }
+      }
+
       else
-        current_state = "main"; //DEBUG
+        current_state = "main";
+        console.log("Main"); //DEBUG
 
     }
 
