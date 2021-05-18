@@ -119,7 +119,7 @@ function draw2Dkeyboard()
 
 // Gets words that resemble the most the word that is being written
 function autocomplete() {
-  let inputWord = "heyo" // TODO: remove
+  let inputWord = "ca" // TODO: remove
   $.ajax({
     type:"POST",
     url:"http://127.0.0.1:5000/",
