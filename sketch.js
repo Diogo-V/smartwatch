@@ -119,7 +119,20 @@ function draw2Dkeyboard()
 
 // Gets words that resemble the most the word that is being written
 function autocomplete() {
-
+  let inputWord = "heyo" // TODO: remove
+  $.ajax({
+    type:"POST",
+    url:"http://127.0.0.1:5000/",
+    data: `${inputWord}`,
+    success: function (response) {
+      let words = response.replace(/'/g, "").split(",")  
+      console.log(words)
+    },
+    error: function (xhr, status) {
+      console.log(status)
+      console.log(xhr)
+    }
+  })
 }
 
 // Evoked when the mouse button was pressed
@@ -131,6 +144,10 @@ function mousePressed()
     // Check if mouse click happened within the touch input area
     if(mouseClickWithin(width/2 - 2.0*PPCM, height/2 - 1.0*PPCM, 4.0*PPCM, 3.0*PPCM))  
     {      
+
+      // TODO: remove this line
+      autocomplete()
+
       // Check if mouse click was on left arrow (2D keyboard)
       if (mouseClickWithin(width/2 - ARROW_SIZE, height/2, ARROW_SIZE, ARROW_SIZE))
       {
