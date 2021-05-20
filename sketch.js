@@ -44,21 +44,14 @@ let ARROW_SIZE;                // UI button size
 let current_letter = 'a';      // current char being displayed on our basic 2D keyboard (starts with 'a')
 
 //Our keyboard
-let img_kb_MAIN;
-let img_kb_ABC;
-let img_kb_DEF;
-let img_kb_GHI;
-let img_kb_JKL;
-let img_kb_MNO;
-let img_kb_PQRS;
-let img_kb_TUVW;
-let img_kb_XYZ;
+let img_keyboard;
+let BASE_WIDTH
+let BASE_HEIGHT
+let BT_WIDTH
+let BT_HEIGHT
 
 // Current state
 let current_state = "main";
-let BT_HEIGHT;
-let BT_WIDTH_SHORT;
-let BT_WIDTH_LONG;
 
 // Runs once before the setup() and loads our data (images, phrases)
 function preload()
@@ -75,15 +68,7 @@ function preload()
   rightArrow = loadImage("data/right.png");
 
   //Loads custom keyboards
-  img_kb_MAIN = loadImage("keyboards/MainKeyboard.png");
-  img_kb_ABC = loadImage("keyboards/AuxKeyboard3_ABC.png");
-  img_kb_DEF = loadImage("keyboards/AuxKeyboard3_DEF.png");
-  img_kb_GHI = loadImage("keyboards/AuxKeyboard3_GHI.png");
-  img_kb_JKL = loadImage("keyboards/AuxKeyboard3_JKL.png");
-  img_kb_MNO = loadImage("keyboards/AuxKeyboard3_MNO.png");
-  img_kb_PQRS = loadImage("keyboards/AuxKeyboard4_PQRS.png");
-  img_kb_TUVW = loadImage("keyboards/AuxKeyboard4_TUVW.png");
-  img_kb_XYZ = loadImage("keyboards/AuxKeyboard3_XYZ.png");
+  img_keyboard = loadImage("./keyboards/Versao2.png");
 }
 
 // Runs once at the start
@@ -146,34 +131,15 @@ function draw2Dkeyboard()
 
   imageMode(CENTER);
 
-  if (current_state == "main")
-    image(img_kb_MAIN, width / 2, height / 2 + 0.5 * PPCM, 4.0 * PPCM, 3.0 * PPCM);
-
-  else if (current_state == "ABC")
-    image(img_kb_ABC, width / 2, height / 2 + 0.5 * PPCM, 4.0 * PPCM, 3.0 * PPCM);
-
-  else if (current_state == "DEF")
-    image(img_kb_DEF, width / 2, height / 2 + 0.5 * PPCM, 4.0 * PPCM, 3.0 * PPCM);
-
-  else if (current_state == "GHI")
-    image(img_kb_GHI, width / 2, height / 2 + 0.5 * PPCM, 4.0 * PPCM, 3.0 * PPCM);
-
-  else if (current_state == "JKL")
-    image(img_kb_JKL, width / 2, height / 2 + 0.5 * PPCM, 4.0 * PPCM, 3.0 * PPCM);
-
-  else if (current_state == "MNO")
-    image(img_kb_MNO, width / 2, height / 2 + 0.5 * PPCM, 4.0 * PPCM, 3.0 * PPCM);
-
-  else if (current_state == "PQRS")
-    image(img_kb_PQRS, width / 2, height / 2 + 0.5 * PPCM, 4.0 * PPCM, 3.0 * PPCM);
-
-  else if (current_state == "TUVW")
-    image(img_kb_TUVW, width / 2, height / 2 + 0.5 * PPCM, 4.0 * PPCM, 3.0 * PPCM);
-
-  else if (current_state == "XYZ")
-    image(img_kb_XYZ, width / 2, height / 2 + 0.5 * PPCM, 4.0 * PPCM, 3.0 * PPCM);
-
+  image(img_keyboard, width / 2, height / 2 + 0.5 * PPCM, 4.0 * PPCM, 3.0 * PPCM);
 }
+
+
+// Receives and processes pressed key
+function buttonPressed(key){
+  console.log("Pressed key #", key);
+}
+
 
 // Evoked when the mouse button was pressed
 function mousePressed()
@@ -205,231 +171,25 @@ function mousePressed()
         //else if (current_letter != '`') currently_typed += current_letter;          // if not any of the above cases, add the current letter to the entered phrase
       //}
 
-      if (current_state == "main"){
-        if (mouseClickWithin(width / 2 - 2.0 * PPCM, height / 2 - PPCM + BT_HEIGHT, BT_HEIGHT, BT_WIDTH_SHORT)){
-          current_state = "ABC";
-          console.log("State changed to ABC");
-        }
+      if (mouseClickWithin(BASE_WIDTH, BASE_HEIGHT, BT_WIDTH, BT_HEIGHT))
+        buttonPressed(0);
+      else if (mouseClickWithin(BASE_WIDTH + BT_WIDTH, BASE_HEIGHT, BT_WIDTH, BT_HEIGHT))
+        buttonPressed(1);
+      else if (mouseClickWithin(BASE_WIDTH + 2*BT_WIDTH, BASE_HEIGHT, BT_WIDTH, BT_HEIGHT))
+        buttonPressed(2);
+      else if (mouseClickWithin(BASE_WIDTH, BASE_HEIGHT + BT_HEIGHT, BT_WIDTH, BT_HEIGHT))
+        buttonPressed(3);
+      else if (mouseClickWithin(BASE_WIDTH + BT_WIDTH, BASE_HEIGHT + BT_HEIGHT, BT_WIDTH, BT_HEIGHT))
+        buttonPressed(4);
+      else if (mouseClickWithin(BASE_WIDTH + 2*BT_WIDTH, BASE_HEIGHT + BT_HEIGHT, BT_WIDTH, BT_HEIGHT))
+        buttonPressed(5);
+      else if (mouseClickWithin(BASE_WIDTH, BASE_HEIGHT + 2*BT_HEIGHT, BT_WIDTH, BT_HEIGHT))
+        buttonPressed(6);
+      else if (mouseClickWithin(BASE_WIDTH + BT_WIDTH, BASE_HEIGHT + 2*BT_HEIGHT, BT_WIDTH, BT_HEIGHT))
+        buttonPressed(7);
+      else if (mouseClickWithin(BASE_WIDTH + 2*BT_WIDTH, BASE_HEIGHT + 2*BT_HEIGHT, BT_WIDTH, BT_HEIGHT))
+        buttonPressed(8);
 
-        else if (mouseClickWithin(width / 2 - 2.0 * PPCM + BT_HEIGHT, height / 2 - PPCM, BT_WIDTH_LONG, BT_HEIGHT)){
-          current_state = "DEF";
-          console.log("State changed to DEF");
-        }
-
-        else if (mouseClickWithin(width / 2, height / 2 - PPCM, BT_WIDTH_LONG, BT_HEIGHT)){
-          current_state = "GHI";
-          console.log("State changed to GHI");
-        }
-
-        else if (mouseClickWithin(width / 2 + 2.0 * PPCM - BT_HEIGHT, height / 2 - PPCM + BT_HEIGHT, BT_HEIGHT, BT_WIDTH_SHORT)){
-          current_state = "JKL";
-          console.log("State changed to JKL");
-        }
-
-        else if (mouseClickWithin(width / 2 + 2.0 * PPCM - BT_HEIGHT, height / 2 + PPCM / 2, BT_HEIGHT, BT_WIDTH_SHORT)){
-          current_state = "MNO";
-          console.log("State changed to MNO");
-        }
-
-        else if (mouseClickWithin(width / 2, height / 2 + 2.0 * PPCM - BT_HEIGHT, BT_WIDTH_LONG, BT_HEIGHT)){
-          current_state = "PQRS";
-          console.log("State changed to PQRS");
-        }
-
-        else if (mouseClickWithin(width / 2 - 2.0 * PPCM + BT_HEIGHT, height / 2 + 2.0 * PPCM - BT_HEIGHT, BT_WIDTH_LONG, BT_HEIGHT)){
-          current_state = "TUVW";
-          console.log("State changed to TUVW");
-        }
-
-        else if (mouseClickWithin(width / 2 - 2.0 * PPCM, height / 2 + PPCM / 2, BT_HEIGHT, BT_WIDTH_SHORT)){
-          current_state = "XYZ";
-          console.log("State changed to XYZ");
-        }
-
-        else if(mouseClickWithin(width / 2 - 1.3* PPCM, height / 2 + 0.7*PPCM, BT_HEIGHT, BT_HEIGHT)){
-          currently_typed += ' ';
-        }
-
-        else if(mouseClickWithin(width / 2 + PPCM/3, height / 2 + 0.7 *PPCM, BT_HEIGHT, BT_HEIGHT)){
-          currently_typed = currently_typed.substring(0, currently_typed.length - 1);
-        }
-      }
-
-      else if(current_state == "ABC"){
-        if (mouseClickWithin(width / 2 - 2.0 * PPCM, height / 2 - 0.5 * PPCM, BT_WIDTH_LONG, 3.0 * PPCM)){
-          currently_typed += 'a';
-        }
-
-        else if (mouseClickWithin(width / 2 - 2.0 * PPCM + BT_WIDTH_LONG, height / 2 - 0.5 * PPCM, BT_WIDTH_LONG, 3.0 * PPCM)){
-          currently_typed += 'b';
-        }
-
-        else if (mouseClickWithin(width / 2 - 2.0 * PPCM + 2*BT_WIDTH_LONG, height / 2 - 0.5 * PPCM, BT_WIDTH_LONG, 3.0 * PPCM)){
-          currently_typed += 'c';
-        }
-
-        current_state = "main";
-      }
-
-      else if(current_state == "DEF"){
-        if (mouseClickWithin(width / 2 - 2.0 * PPCM, height / 2 - 0.5 * PPCM, BT_WIDTH_LONG, 3.0 * PPCM)){
-          currently_typed += 'd';
-          current_state = "main";
-        }
-
-        else if (mouseClickWithin(width / 2 - 2.0 * PPCM + BT_WIDTH_LONG, height / 2 - 0.5 * PPCM, BT_WIDTH_LONG, 3.0 * PPCM)){
-          currently_typed += 'e';
-          current_state = "main";
-        }
-
-        else if (mouseClickWithin(width / 2 - 2.0 * PPCM + 2*BT_WIDTH_LONG, height / 2 - 0.5 * PPCM, BT_WIDTH_LONG, 3.0 * PPCM)){
-          currently_typed += 'f';
-          current_state = "main";
-        }
-
-        else{
-        current_state = "main";
-        }
-      }
-
-      else if(current_state == "GHI"){
-        if (mouseClickWithin(width / 2 - 2.0 * PPCM, height / 2 - 0.5 * PPCM, BT_WIDTH_LONG, 3.0 * PPCM)){
-          currently_typed += 'g';
-          current_state = "main";
-        }
-
-        else if (mouseClickWithin(width / 2 - 2.0 * PPCM + BT_WIDTH_LONG, height / 2 - 0.5 * PPCM, BT_WIDTH_LONG, 3.0 * PPCM)){
-          currently_typed += 'h';
-          current_state = "main";
-        }
-
-        else if (mouseClickWithin(width / 2 - 2.0 * PPCM + 2*BT_WIDTH_LONG, height / 2 - 0.5 * PPCM, BT_WIDTH_LONG, 3.0 * PPCM)){
-          currently_typed += 'i';
-          current_state = "main";
-        }
-
-        else{
-          current_state = "main";
-        }
-      }
-
-      else if(current_state == "JKL"){
-        if (mouseClickWithin(width / 2 - 2.0 * PPCM, height / 2 - 0.5 * PPCM, BT_WIDTH_LONG, 3.0 * PPCM)){
-          currently_typed += 'j';
-          current_state = "main";
-        }
-
-        else if (mouseClickWithin(width / 2 - 2.0 * PPCM + BT_WIDTH_LONG, height / 2 - 0.5 * PPCM, BT_WIDTH_LONG, 3.0 * PPCM)){
-          currently_typed += 'k';
-          current_state = "main";
-        }
-
-        else if (mouseClickWithin(width / 2 - 2.0 * PPCM + 2*BT_WIDTH_LONG, height / 2 - 0.5 * PPCM, BT_WIDTH_LONG, 3.0 * PPCM)){
-          currently_typed += 'l';
-          current_state = "main";
-        }
-
-        else{
-          current_state = "main";
-        }
-      }
-
-      else if(current_state == "MNO"){
-        if (mouseClickWithin(width / 2 - 2.0 * PPCM, height / 2 - 0.5 * PPCM, BT_WIDTH_LONG, 3.0 * PPCM)){
-          currently_typed += 'm';
-          current_state = "main";
-        }
-
-        else if (mouseClickWithin(width / 2 - 2.0 * PPCM + BT_WIDTH_LONG, height / 2 - 0.5 * PPCM, BT_WIDTH_LONG, 3.0 * PPCM)){
-          currently_typed += 'n';
-          current_state = "main";
-        }
-
-        else if (mouseClickWithin(width / 2 - 2.0 * PPCM + 2*BT_WIDTH_LONG, height / 2 - 0.5 * PPCM, BT_WIDTH_LONG, 3.0 * PPCM)){
-          currently_typed += 'o';
-          current_state = "main";
-        }
-
-        else{
-          current_state = "main";
-        }
-      }
-
-      else if(current_state == "PQRS"){
-        if (mouseClickWithin(width / 2 - 2.5 * PPCM, height / 2 - 2 * PPCM, BT_WIDTH_LONG + BT_WIDTH_LONG/2, 2.5 * PPCM)) {
-          currently_typed += "p";
-          current_state = "main";
-        } 
-
-        else if (mouseClickWithin(width / 2, height / 2 - 2 * PPCM, BT_WIDTH_LONG + BT_WIDTH_LONG/2, 2.5 * PPCM)) {
-          currently_typed += "q";
-          current_state = "main";
-        } 
-
-        else if (mouseClickWithin(width / 2 - 2.5 * PPCM, height / 2, BT_WIDTH_LONG + BT_WIDTH_LONG/2, 2.5 * PPCM)) {
-          currently_typed += "r";
-          current_state = "main";
-        } 
-
-        else if (mouseClickWithin(width / 2, height / 2, BT_WIDTH_LONG + BT_WIDTH_LONG/2, 2.5 * PPCM)) {
-          currently_typed += "s";
-          current_state = "main";
-        } 
-
-        else {
-          current_state = "main";
-        }
-      }
-
-      else if(current_state == "TUVW"){
-        if (mouseClickWithin(width / 2 - 2.5 * PPCM, height / 2 - 2 * PPCM, BT_WIDTH_LONG + BT_WIDTH_LONG/2, 2.5 * PPCM)) {
-          currently_typed += "t";
-          current_state = "main";
-        } 
-
-        else if (mouseClickWithin(width / 2, height / 2 - 2 * PPCM, BT_WIDTH_LONG + BT_WIDTH_LONG/2, 2.5 * PPCM)) {
-          currently_typed += "u";
-          current_state = "main";
-        } 
-
-        else if (mouseClickWithin(width / 2 - 2.5 * PPCM, height / 2, BT_WIDTH_LONG + BT_WIDTH_LONG/2, 2.5 * PPCM)) {
-          currently_typed += "v";
-          current_state = "main";
-        } 
-
-        else if (mouseClickWithin(width / 2, height / 2, BT_WIDTH_LONG + BT_WIDTH_LONG/2, 2.5 * PPCM)) {
-          currently_typed += "w";
-          current_state = "main";
-        } 
-
-        else{
-          current_state = "main";
-        }
-      }
-
-      else if(current_state == "XYZ"){
-        if (mouseClickWithin(width / 2 - 2.0 * PPCM, height / 2 - 0.5 * PPCM, BT_WIDTH_LONG, 3.0 * PPCM)){
-          currently_typed += 'x';
-          current_state = "main";
-        }
-        else if (mouseClickWithin(width / 2 - 2.0 * PPCM + BT_WIDTH_LONG, height / 2 - 0.5 * PPCM, BT_WIDTH_LONG, 3.0 * PPCM)){
-          currently_typed += 'y';
-          current_state = "main";
-        }
-
-        else if (mouseClickWithin(width / 2 - 2.0 * PPCM + 2*BT_WIDTH_LONG, height / 2 - 0.5 * PPCM, BT_WIDTH_LONG, 3.0 * PPCM)){
-          currently_typed += 'z';
-          current_state = "main";
-        }
-
-        else{
-          current_state = "main";
-        }
-      }
-
-      else
-        current_state = "main";
-        console.log("Main"); //DEBUG
 
     }
 
@@ -576,9 +336,10 @@ function windowResized()
   ARM_HEIGHT    = (int)(11.2 * PPCM);
 
   //ARROW_SIZE     = (int)(2.2  * PPCM);
-  BT_HEIGHT      = (int)(0.72 * PPCM);
-  BT_WIDTH_SHORT = (int)(0.78 * PPCM);
-  BT_WIDTH_LONG  = (int)(1.26 * PPCM);
+  BASE_WIDTH    = (int) (width / 2 - (2.0 - 0.287) * PPCM)
+  BASE_HEIGHT   = (int) (height / 2 - (1.0 - 0.592) * PPCM)
+  BT_WIDTH      = (int) (1.141 * PPCM)
+  BT_HEIGHT     = (int) (0.641 * PPCM)
 
   // Starts drawing the watch immediately after we go fullscreen (DO NO CHANGE THIS!)
   draw_finger_arm = true;
