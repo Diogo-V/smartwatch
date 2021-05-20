@@ -45,13 +45,16 @@ let current_letter = 'a';      // current char being displayed on our basic 2D k
 
 //Our keyboard
 let img_keyboard;
+let last_press
+let last_clicked
+let double_click_delay = 500;
+
 let BASE_WIDTH
 let BASE_HEIGHT
 let BT_WIDTH
 let BT_HEIGHT
 
-// Current state
-let current_state = "main";
+let current_string = "";
 
 // Runs once before the setup() and loads our data (images, phrases)
 function preload()
@@ -136,8 +139,57 @@ function draw2Dkeyboard()
 
 
 // Receives and processes pressed key
-function buttonPressed(key){
-  console.log("Pressed key #", key);
+function buttonPressed(key, time_press){
+  if (key == last_clicked && time_press - last_press < double_click_delay)
+    incrementLastLetter();
+  else if (key == 0)
+    current_string += " "
+  else if (key == 1)
+    current_string += "a"
+  else if (key == 2)
+    current_string += "d"
+  else if (key == 3)
+    current_string += "g"
+  else if (key == 4)
+    current_string += "j"
+  else if (key == 5)
+    current_string += "m"
+  else if (key == 6)
+    current_string += "p"
+  else if (key == 7)
+    current_string += "t"
+  else if (key == 8)
+    current_string += "w"
+
+  console.log(">" + current_string + "<");
+  last_clicked = key;
+  last_press = time_press;
+}
+
+// Changes string to match 2nd or 3rd consecutive click
+function incrementLastLetter(){
+  let last_char = current_string.slice(-1);
+  let new_char;
+
+  if (last_char == " "){
+    current_string = current_string.slice(0, -2);
+  }
+  else {
+    last_char = last_char.charCodeAt(0);
+    switch (last_char){
+      case 99:  new_char = "a"; break;
+      case 102: new_char = "d"; break;
+      case 105: new_char = "g"; break;
+      case 108: new_char = "j"; break;
+      case 111: new_char = "m"; break;
+      case 115: new_char = "p"; break;
+      case 118: new_char = "t"; break;
+      case 122: new_char = "w"; break;
+      default:  new_char = String.fromCharCode(last_char + 1);
+    }
+    current_string = current_string.replace(/.$/, new_char);
+  }
+  return;
 }
 
 
@@ -172,23 +224,23 @@ function mousePressed()
       //}
 
       if (mouseClickWithin(BASE_WIDTH, BASE_HEIGHT, BT_WIDTH, BT_HEIGHT))
-        buttonPressed(0);
+        buttonPressed(0, millis());
       else if (mouseClickWithin(BASE_WIDTH + BT_WIDTH, BASE_HEIGHT, BT_WIDTH, BT_HEIGHT))
-        buttonPressed(1);
+        buttonPressed(1, millis());
       else if (mouseClickWithin(BASE_WIDTH + 2*BT_WIDTH, BASE_HEIGHT, BT_WIDTH, BT_HEIGHT))
-        buttonPressed(2);
+        buttonPressed(2, millis());
       else if (mouseClickWithin(BASE_WIDTH, BASE_HEIGHT + BT_HEIGHT, BT_WIDTH, BT_HEIGHT))
-        buttonPressed(3);
+        buttonPressed(3, millis());
       else if (mouseClickWithin(BASE_WIDTH + BT_WIDTH, BASE_HEIGHT + BT_HEIGHT, BT_WIDTH, BT_HEIGHT))
-        buttonPressed(4);
+        buttonPressed(4, millis());
       else if (mouseClickWithin(BASE_WIDTH + 2*BT_WIDTH, BASE_HEIGHT + BT_HEIGHT, BT_WIDTH, BT_HEIGHT))
-        buttonPressed(5);
+        buttonPressed(5, millis());
       else if (mouseClickWithin(BASE_WIDTH, BASE_HEIGHT + 2*BT_HEIGHT, BT_WIDTH, BT_HEIGHT))
-        buttonPressed(6);
+        buttonPressed(6, millis());
       else if (mouseClickWithin(BASE_WIDTH + BT_WIDTH, BASE_HEIGHT + 2*BT_HEIGHT, BT_WIDTH, BT_HEIGHT))
-        buttonPressed(7);
+        buttonPressed(7, millis());
       else if (mouseClickWithin(BASE_WIDTH + 2*BT_WIDTH, BASE_HEIGHT + 2*BT_HEIGHT, BT_WIDTH, BT_HEIGHT))
-        buttonPressed(8);
+        buttonPressed(8, millis());
 
 
     }
