@@ -47,7 +47,7 @@ let current_letter = 'a';      // current char being displayed on our basic 2D k
 let img_keyboard;
 let last_press
 let last_clicked
-let double_click_delay = 500;
+let double_click_delay = 750;
 
 let BASE_WIDTH
 let BASE_HEIGHT
@@ -167,8 +167,11 @@ function buttonPressed(key, time_press){
   current_word = currently_typed.slice(currently_typed.lastIndexOf(' ') + 1);
   console.log(current_word);
 
-  last_clicked = key;
-  last_press = time_press;«
+  if (last_clicked == 0 && key == 0)
+    last_clicked = "";
+  else
+    last_clicked = key;
+  last_press = time_press;
 }
 
 // Changes string to match 2nd or 3rd consecutive click
