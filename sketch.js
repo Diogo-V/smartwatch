@@ -54,7 +54,7 @@ let BASE_HEIGHT
 let BT_WIDTH
 let BT_HEIGHT
 
-let current_string = "";
+let current_word = "";
 
 // Runs once before the setup() and loads our data (images, phrases)
 function preload()
@@ -99,13 +99,14 @@ function draw()
     drawACCEPT();              // draws the 'ACCEPT' button that submits a phrase and completes a trial
 
     // Draws the non-interactive screen area (4x1cm) -- DO NOT CHANGE SIZE!
-    noStroke();
-    fill(125);
-    rect(width/2 - 2.0*PPCM, height/2 - 2.0*PPCM, 4.0*PPCM, 1.0*PPCM);
-    textAlign(CENTER);
-    textFont("Arial", 16);
-    fill(0);
-    text("NOT INTERACTIVE", width/2, height/2 - 1.3 * PPCM);
+    // noStroke();
+    // fill(125);
+    // rect(width/2 - 2.0*PPCM, height/2 - 2.0*PPCM, 4.0*PPCM, 1.0*PPCM);
+    // textAlign(CENTER);
+    // textFont("Arial", 16);
+    drawNonInteractive();
+    // fill(0);
+    // text("NOT INTERACTIVE", width/2, height/2 - 1.3 * PPCM);
 
     // Draws the touch input area (4x3cm) -- DO NOT CHANGE SIZE!
     stroke(0, 255, 0);
@@ -141,38 +142,44 @@ function draw2Dkeyboard()
 // Receives and processes pressed key
 function buttonPressed(key, time_press){
   if (key == last_clicked && time_press - last_press < double_click_delay)
-    incrementLastLetter();
+    incrementLastLetter(key);
   else if (key == 0)
-    current_string += " "
+    currently_typed += " "
   else if (key == 1)
-    current_string += "a"
+    currently_typed  += "a"
   else if (key == 2)
-    current_string += "d"
+    currently_typed  += "d"
   else if (key == 3)
-    current_string += "g"
+    currently_typed  += "g"
   else if (key == 4)
-    current_string += "j"
+    currently_typed  += "j"
   else if (key == 5)
-    current_string += "m"
+    currently_typed  += "m"
   else if (key == 6)
-    current_string += "p"
+    currently_typed  += "p"
   else if (key == 7)
-    current_string += "t"
+    currently_typed  += "t"
   else if (key == 8)
-    current_string += "w"
+    currently_typed  += "w"
 
-  console.log(">" + current_string + "<");
+  console.log(">" + currently_typed + "<");
+  /* used for the autocomplete*/
+  current_word = currently_typed.slice(currently_typed.lastIndexOf(' ') + 1);
+  console.log(current_word);
+
   last_clicked = key;
   last_press = time_press;
+  changeNonInteractive();
 }
 
 // Changes string to match 2nd or 3rd consecutive click
-function incrementLastLetter(){
-  let last_char = current_string.slice(-1);
+function incrementLastLetter(key){
+  let last_char = currently_typed.slice(-1);
   let new_char;
 
-  if (last_char == " "){
-    current_string = current_string.slice(0, -2);
+  //TODO: isto pode dar um bug
+  if (last_char == " " || key==0){
+    currently_typed = currently_typed.slice(0, -2);
   }
   else {
     last_char = last_char.charCodeAt(0);
@@ -187,9 +194,45 @@ function incrementLastLetter(){
       case 122: new_char = "w"; break;
       default:  new_char = String.fromCharCode(last_char + 1);
     }
-    current_string = current_string.replace(/.$/, new_char);
+    currently_typed = currently_typed.replace(/.$/, new_char);
   }
   return;
+}
+
+
+function drawNonInteractive(){
+  // currently_type is a prefix of target_prase
+  if (target_phrase.indexOf(currently_typed) === 0) {
+    //push();
+    // noStroke();
+    noStroke();
+    fill(152, 251, 152);
+    rect(
+      width / 2 - 2.0 * PPCM,
+      height / 2 - 2.0 * PPCM,
+      4.0 * PPCM,
+      1.0 * PPCM
+    );
+    // textAlign(CENTER);
+    // textFont("Arial", 16);
+    // fill(0);
+    // text("DOING GREAT", width / 2, height / 2 - 1.3 * PPCM);
+    //pop();
+  } else {
+    // noStroke();
+    fill(205, 92, 92);
+    noStroke();
+    rect(
+      width / 2 - 2.0 * PPCM,
+      height / 2 - 2.0 * PPCM,
+      4.0 * PPCM,
+      1.0 * PPCM
+    );
+      // textAlign(CENTER);
+      // textFont("Arial", 16);
+      // fill(0);
+      // text("WRONG", width / 2, height / 2 - 1.3 * PPCM);
+  }
 }
 
 
@@ -223,10 +266,12 @@ function mousePressed()
         //else if (current_letter != '`') currently_typed += current_letter;          // if not any of the above cases, add the current letter to the entered phrase
       //}
 
-      if (mouseClickWithin(BASE_WIDTH, BASE_HEIGHT, BT_WIDTH, BT_HEIGHT))
-        buttonPressed(0, millis());
-      else if (mouseClickWithin(BASE_WIDTH + BT_WIDTH, BASE_HEIGHT, BT_WIDTH, BT_HEIGHT))
+      if (mouseClickWithin(BASE_WIDTH, BASE_HEIGHT, BT_WIDTH, BT_HEIGHT)){
+          buttonPressed(0, millis());
+      }
+      else if (mouseClickWithin(BASE_WIDTH + BT_WIDTH, BASE_HEIGHT, BT_WIDTH, BT_HEIGHT)) {
         buttonPressed(1, millis());
+      }
       else if (mouseClickWithin(BASE_WIDTH + 2*BT_WIDTH, BASE_HEIGHT, BT_WIDTH, BT_HEIGHT))
         buttonPressed(2, millis());
       else if (mouseClickWithin(BASE_WIDTH, BASE_HEIGHT + BT_HEIGHT, BT_WIDTH, BT_HEIGHT))
