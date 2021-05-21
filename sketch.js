@@ -168,8 +168,7 @@ function buttonPressed(key, time_press){
   console.log(current_word);
 
   last_clicked = key;
-  last_press = time_press;
-  changeNonInteractive();
+  last_press = time_press;«
 }
 
 // Changes string to match 2nd or 3rd consecutive click
