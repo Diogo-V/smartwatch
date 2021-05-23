@@ -13,14 +13,12 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 
 # AutoComplete configuration
 words = {}
-
-content_files = {
+autocomplete = autocomplete_factory(content_files={
     'words': {
         'filepath': "./words.json",
         'compress': True
     }
-}
-autocomplete = autocomplete_factory(content_files=content_files)
+})
 
 
 def write_dict_to_json(dict):
@@ -28,7 +26,7 @@ def write_dict_to_json(dict):
         json.dump(dict, fp, indent=2)
 
 
-def read_word_file():
+def read_word_file(write_to_json=False):
     
     with open('./count_1w.txt', 'r') as f:
         file_name_data = f.read()
@@ -41,16 +39,30 @@ def read_word_file():
     for i in range(0, len(file_words)):
         words[file_words[i]] = [{}, "", int(file_freq[i])]
         
-    write_dict_to_json(words)
+    if write_to_json: 
+        write_dict_to_json(words)
 
 
 def find_suggestions(word):
     
-    suggestions = autocomplete.search(word=word, size=20)
+    response = []
     
-    print(suggestions)
+    # Gets list of suggestions
+    suggestions = autocomplete.search(word=word, size=100)
     
-    return suggestions
+    # Appends word frequency to a dictionary
+    word_and_freq = {}
+    for word_list in suggestions:
+        word_and_freq[word_list[0]] = words[word_list[0]][2]
+        
+    # Sorts dictionary by frequency
+    word_and_freq = list(sorted(word_and_freq.items(), key=lambda item: item[1]))[-3:] 
+    
+    # Gets most likely words in a list to be returned
+    for word in word_and_freq:
+        response.append(word[0])
+    
+    return response
 
 
 @app.route("/", methods=['GET', 'POST'])
@@ -58,11 +70,14 @@ def find_suggestions(word):
 def get_words():
     
     if request.method == 'POST':
+        
+        # Gets data sent from user
         input_word = request.get_data().decode("utf-8")
-        print(input_word)
-
+        
+        # Gets list of suggestions 
         response = find_suggestions(input_word)
         
+        # Parses and returns data to the client
         return str(response).replace("[", "").replace("]", "").replace(" ", "")
     
     else:
@@ -71,4 +86,5 @@ def get_words():
 
 # Driver code
 if __name__ == '__main__':
+    read_word_file()
     app.run()
