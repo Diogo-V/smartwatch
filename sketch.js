@@ -43,6 +43,9 @@ let leftArrow, rightArrow;     // holds the left and right UI images for our bas
 let ARROW_SIZE;                // UI button size
 let current_letter = 'a';      // current char being displayed on our basic 2D keyboard (starts with 'a')
 
+// Auto complete endpoint
+const autoCompleteWebServer = "https://auto-complete-dv.herokuapp.com/"
+
 // Runs once before the setup() and loads our data (images, phrases)
 function preload()
 {    
@@ -117,12 +120,17 @@ function draw2Dkeyboard()
   image(rightArrow, width/2, height/2, ARROW_SIZE, ARROW_SIZE);  
 }
 
+function getLastTypedWord() {
+  let words = currently_typed.trim().split(" ");
+  return words[words.length - 1]
+}
+
 // Gets words that resemble the most the word that is being written
 function autocomplete() {
-  let inputWord = "a" // TODO: remove
+  let inputWord = getLastTypedWord()
   $.ajax({
     type:"POST",
-    url:"http://127.0.0.1:5000/",
+    url: autoCompleteWebServer,
     data: `${inputWord}`,
     success: function (response) {
       let words = response.replace(/'/g, "").split(",")  
@@ -145,9 +153,6 @@ function mousePressed()
     if(mouseClickWithin(width/2 - 2.0*PPCM, height/2 - 1.0*PPCM, 4.0*PPCM, 3.0*PPCM))  
     {      
 
-      // TODO: remove this line
-      autocomplete()
-
       // Check if mouse click was on left arrow (2D keyboard)
       if (mouseClickWithin(width/2 - ARROW_SIZE, height/2, ARROW_SIZE, ARROW_SIZE))
       {
@@ -166,7 +171,10 @@ function mousePressed()
         if (current_letter == '_') currently_typed += " ";                          // if underscore, consider that a space bar
         else if (current_letter == '`' && currently_typed.length > 0)               // if `, treat that as delete
           currently_typed = currently_typed.substring(0, currently_typed.length - 1);
-        else if (current_letter != '`') currently_typed += current_letter;          // if not any of the above cases, add the current letter to the entered phrase
+        else if (current_letter != '`') {
+          currently_typed += current_letter;   // if not any of the above cases, add the current letter to the entered phrase
+          autocomplete()  // TODO: remove from here
+        }       
       }
     }
     
