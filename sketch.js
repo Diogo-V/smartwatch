@@ -142,8 +142,16 @@ function draw2Dkeyboard()
 }
 
 
+// Receives and processes pressed suggested word
+function wordPressed(word_number){
+
+}
+
+
 // Receives and processes pressed key
-function buttonPressed(key, time_press){
+function buttonPressed(key){
+  time_press = millis();
+
   if (key == last_clicked && time_press - last_press < double_click_delay)
     incrementLastLetter(key);
   else if (key == 0)
@@ -251,7 +259,7 @@ function autocomplete() {
     url: autoCompleteWebServer,
     data: `${current_word}`,
     success: function (response) {
-      let words = response.replace(/'/g, "").split(",")  
+      let words = response.replace(/'/g, "").split(",")
       console.log(words)  // FIXME: remove this. is just used for reference and to see what is being passed
     },
     error: function (xhr, status) {
@@ -291,28 +299,30 @@ function mousePressed()
         //else if (current_letter != '`') currently_typed += current_letter;          // if not any of the above cases, add the current letter to the entered phrase
       //}
 
-      if (mouseClickWithin(BASE_WIDTH, BASE_HEIGHT, BT_WIDTH, BT_HEIGHT)){
-          buttonPressed(0, millis());
-      }
-      else if (mouseClickWithin(BASE_WIDTH + BT_WIDTH, BASE_HEIGHT, BT_WIDTH, BT_HEIGHT)) {
-        buttonPressed(1, millis());
-      }
+      if (mouseClickWithin(BASE_WIDTH, BASE_HEIGHT, BT_WIDTH, BT_HEIGHT))
+        buttonPressed(0);
+      else if (mouseClickWithin(BASE_WIDTH + BT_WIDTH, BASE_HEIGHT, BT_WIDTH, BT_HEIGHT))
+        buttonPressed(1);
       else if (mouseClickWithin(BASE_WIDTH + 2*BT_WIDTH, BASE_HEIGHT, BT_WIDTH, BT_HEIGHT))
-        buttonPressed(2, millis());
+        buttonPressed(2);
       else if (mouseClickWithin(BASE_WIDTH, BASE_HEIGHT + BT_HEIGHT, BT_WIDTH, BT_HEIGHT))
-        buttonPressed(3, millis());
+        buttonPressed(3);
       else if (mouseClickWithin(BASE_WIDTH + BT_WIDTH, BASE_HEIGHT + BT_HEIGHT, BT_WIDTH, BT_HEIGHT))
-        buttonPressed(4, millis());
+        buttonPressed(4);
       else if (mouseClickWithin(BASE_WIDTH + 2*BT_WIDTH, BASE_HEIGHT + BT_HEIGHT, BT_WIDTH, BT_HEIGHT))
-        buttonPressed(5, millis());
+        buttonPressed(5);
       else if (mouseClickWithin(BASE_WIDTH, BASE_HEIGHT + 2*BT_HEIGHT, BT_WIDTH, BT_HEIGHT))
-        buttonPressed(6, millis());
+        buttonPressed(6);
       else if (mouseClickWithin(BASE_WIDTH + BT_WIDTH, BASE_HEIGHT + 2*BT_HEIGHT, BT_WIDTH, BT_HEIGHT))
-        buttonPressed(7, millis());
+        buttonPressed(7);
       else if (mouseClickWithin(BASE_WIDTH + 2*BT_WIDTH, BASE_HEIGHT + 2*BT_HEIGHT, BT_WIDTH, BT_HEIGHT))
-        buttonPressed(8, millis());
-
-
+        buttonPressed(8);
+      else if (mouseClickWithin(width / 2 - 2.0 * PPCM, height / 2 - 1.0 * PPCM, 4.0 * PPCM / 3, BT_HEIGHT - height / 2))
+        wordPressed(0);
+      else if (mouseClickWithin(width / 2 - 2.0 * PPCM / 3, height / 2 - 1.0 * PPCM, 4.0 * PPCM / 3, BT_HEIGHT - height / 2))
+        wordPressed(1);
+      else if (mouseClickWithin(width / 2 + 2.0 * PPCM / 3, height / 2 - 1.0 * PPCM, 4.0 * PPCM / 3, BT_HEIGHT - height / 2))
+        wordPressed(2);
     }
 
     // Check if mouse click happened within 'ACCEPT'
