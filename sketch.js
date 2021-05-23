@@ -57,7 +57,7 @@ let BASE_HEIGHT
 let BT_WIDTH
 let BT_HEIGHT
 
-let current_word = "";  // FIXME: ver se isto está aqui a fazer alguma coisa
+let current_word = ""
 
 // Runs once before the setup() and loads our data (images, phrases)
 function preload()
@@ -165,7 +165,6 @@ function buttonPressed(key, time_press){
   else if (key == 8)
     currently_typed  += "w"
 
-  console.log(">" + currently_typed + "<");
   /* used for the autocomplete*/
   current_word = currently_typed.slice(currently_typed.lastIndexOf(' ') + 1);
   console.log(current_word);
@@ -242,13 +241,18 @@ function drawNonInteractive(){
 
 // Gets words that resemble the most the word that is being written
 function autocomplete() {
+  /* TODO: things that need to be done:
+        1º: colocar a função no sitio em que alteramos a current_word ou no sitio que processamos o input do user
+        2º: o output vem numa lista de 3 strings. este output deve ser renderizado para o user
+        3º: também temos de fazer um botão/algum sitio em que o user possa selecionar qual a palavra que quer
+   */
   $.ajax({
     type:"POST",
     url: autoCompleteWebServer,
     data: `${current_word}`,
     success: function (response) {
       let words = response.replace(/'/g, "").split(",")  
-      console.log(words)
+      console.log(words)  // FIXME: remove this. is just used for reference and to see what is being passed
     },
     error: function (xhr, status) {
       console.log(status)
