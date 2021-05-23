@@ -39,9 +39,9 @@ let errors           = 0;      // a running total of the number of errors (when 
 let database;                  // Firebase DB
 
 // 2D Keyboard UI
-let leftArrow, rightArrow;     // holds the left and right UI images for our basic 2D keyboard
-let ARROW_SIZE;                // UI button size
-let current_letter = 'a';      // current char being displayed on our basic 2D keyboard (starts with 'a')
+//let leftArrow, rightArrow;     // holds the left and right UI images for our basic 2D keyboard
+//let ARROW_SIZE;                // UI button size
+//let current_letter = 'a';      // current char being displayed on our basic 2D keyboard (starts with 'a')
 
 // Auto complete endpoint
 const autoCompleteWebServer = "https://auto-complete-dv.herokuapp.com/"
@@ -58,6 +58,7 @@ let BT_WIDTH
 let BT_HEIGHT
 
 let current_word = ""
+let suggested_words
 
 // Runs once before the setup() and loads our data (images, phrases)
 function preload()
@@ -88,6 +89,8 @@ function setup()
   target_phrase = phrases[current_trial];
 
   drawUserIDScreen();       // draws the user input screen (student number and display size)
+
+  autocomplete();
 }
 
 function draw()
@@ -135,17 +138,59 @@ function draw2Dkeyboard()
   //imageMode(CORNER);
   //image(leftArrow, width/2 - ARROW_SIZE, height/2, ARROW_SIZE, ARROW_SIZE);
   //image(rightArrow, width/2, height/2, ARROW_SIZE, ARROW_SIZE);
+  let height_words = height / 2 - (1.0 - 0.592 / 2) * PPCM
+  let max_len;
 
   imageMode(CENTER);
-
   image(img_keyboard, width / 2, height / 2 + 0.5 * PPCM, 4.0 * PPCM, 3.0 * PPCM);
+
+
+  textAlign(CENTER, CENTER);
+  fill(0);
+
+  if (suggested_words.length == 3){
+    if (suggested_words[0].length > suggested_words[1].length && suggested_words[0].length > suggested_words[2].length)
+      max_len = suggested_words[0].length;
+    else if (suggested_words[1].length > suggested_words[0].length && suggested_words[1].length > suggested_words[2].length)
+      max_len = suggested_words[1].length;
+    else
+      max_len = suggested_words[2].length;
+
+    if (max_len >= 7)
+      textFont("Arial", 13);
+    else if (max_len >= 5)
+      textFont("Arial", 17);
+    else
+      textFont("Arial", 20);
+
+
+    text(suggested_words[0], width / 2 - PPCM, height_words);
+    text(suggested_words[1], width / 2, height_words);
+    text(suggested_words[2], width / 2 + PPCM, height_words);
+  }
 }
 
 
 // Receives and processes pressed suggested word
 function wordPressed(word_number){
+  correct_word = suggested_words[word_number];
+  let i;
+  let min;
 
+  if (correct_word.length > current_word.length)
+    min = current_word.length;
+  else
+    min = correct_word.length;
+
+  for (i = 0; i < min && current_word.charAt(i) == correct_word.charAt(i); i++);
+
+  console.log("Pressed word " + word_number + " and will be inserted >" + correct_word.slice(i) + "<");
+
+  currently_typed += correct_word.slice(i);
+  current_word = correct_word;
+  autocomplete();
 }
+
 
 
 // Receives and processes pressed key
@@ -175,7 +220,8 @@ function buttonPressed(key){
 
   /* used for the autocomplete*/
   current_word = currently_typed.slice(currently_typed.lastIndexOf(' ') + 1);
-  console.log(current_word);
+  autocomplete();
+  console.log(">" + current_word + "<");
 
   if (last_clicked == 0 && key == 0)
     last_clicked = "";
@@ -190,7 +236,7 @@ function incrementLastLetter(key){
   let new_char;
 
   //TODO: isto pode dar um bug
-  if (last_char == " " || key==0){
+  if (last_char == " " || key == 0){
     currently_typed = currently_typed.slice(0, -2);
   }
   else {
@@ -259,8 +305,8 @@ function autocomplete() {
     url: autoCompleteWebServer,
     data: `${current_word}`,
     success: function (response) {
-      let words = response.replace(/'/g, "").split(",")
-      console.log(words)  // FIXME: remove this. is just used for reference and to see what is being passed
+      suggested_words = response.replace(/'/g, "").split(",")
+      console.log(suggested_words)  // FIXME: remove this. is just used for reference and to see what is being passed
     },
     error: function (xhr, status) {
       console.log(status)
@@ -317,11 +363,11 @@ function mousePressed()
         buttonPressed(7);
       else if (mouseClickWithin(BASE_WIDTH + 2*BT_WIDTH, BASE_HEIGHT + 2*BT_HEIGHT, BT_WIDTH, BT_HEIGHT))
         buttonPressed(8);
-      else if (mouseClickWithin(width / 2 - 2.0 * PPCM, height / 2 - 1.0 * PPCM, 4.0 * PPCM / 3, BT_HEIGHT - height / 2))
+      else if (mouseClickWithin(width / 2 - 2.0 * PPCM, height / 2 - 1.0 * PPCM, 4.0 * PPCM / 3, 0.592 * PPCM))
         wordPressed(0);
-      else if (mouseClickWithin(width / 2 - 2.0 * PPCM / 3, height / 2 - 1.0 * PPCM, 4.0 * PPCM / 3, BT_HEIGHT - height / 2))
+      else if (mouseClickWithin(width / 2 - 2.0 * PPCM / 3, height / 2 - 1.0 * PPCM, 4.0 * PPCM / 3, 0.592 * PPCM))
         wordPressed(1);
-      else if (mouseClickWithin(width / 2 + 2.0 * PPCM / 3, height / 2 - 1.0 * PPCM, 4.0 * PPCM / 3, BT_HEIGHT - height / 2))
+      else if (mouseClickWithin(width / 2 + 2.0 * PPCM / 3, height / 2 - 1.0 * PPCM, 4.0 * PPCM / 3, 0.592 * PPCM))
         wordPressed(2);
     }
 
