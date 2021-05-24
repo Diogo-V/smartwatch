@@ -169,6 +169,7 @@ function draw2Dkeyboard()
     text(suggested_words[1], width / 2, height_words);
     textAlign(RIGHT, CENTER);
     text(suggested_words[2], width / 2 + 2 * PPCM, height_words);
+    textAlign(CENTER);
   }
 }
 
