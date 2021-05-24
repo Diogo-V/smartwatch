@@ -145,7 +145,6 @@ function draw2Dkeyboard()
   image(img_keyboard, width / 2, height / 2 + 0.5 * PPCM, 4.0 * PPCM, 3.0 * PPCM);
 
 
-  textAlign(CENTER, CENTER);
   fill(0);
 
   if (suggested_words.length == 3){
@@ -156,17 +155,20 @@ function draw2Dkeyboard()
     else
       max_len = suggested_words[2].length;
 
-    if (max_len >= 7)
+    if (max_len >= 8)
       textFont("Arial", 13);
-    else if (max_len >= 5)
+    else if (max_len >= 6)
       textFont("Arial", 17);
     else
       textFont("Arial", 20);
 
 
-    text(suggested_words[0], width / 2 - PPCM, height_words);
+    textAlign(LEFT, CENTER);
+    text(suggested_words[0], width / 2 - 2 * PPCM, height_words);
+    textAlign(CENTER, CENTER);
     text(suggested_words[1], width / 2, height_words);
-    text(suggested_words[2], width / 2 + PPCM, height_words);
+    textAlign(RIGHT, CENTER);
+    text(suggested_words[2], width / 2 + 2 * PPCM, height_words);
   }
 }
 
