@@ -77,7 +77,9 @@ function preload() {
   rightArrow = loadImage("data/right.png");
 
   //Loads custom keyboards
-  img_keyboard = loadImage("./keyboards/Versao2.png");
+  img_keyboard = loadImage("./keyboards/Versao4.png");
+
+  swipe_left = loadImage("./data/swipe-left.png");
 }
 
 // Runs once at the start
@@ -104,14 +106,13 @@ function draw() {
     drawACCEPT(); // draws the 'ACCEPT' button that submits a phrase and completes a trial
 
     // Draws the non-interactive screen area (4x1cm) -- DO NOT CHANGE SIZE!
-    // noStroke();
-    // fill(125);
-    // rect(width/2 - 2.0*PPCM, height/2 - 2.0*PPCM, 4.0*PPCM, 1.0*PPCM);
-    // textAlign(CENTER);
-    // textFont("Arial", 16);
-    drawNonInteractive();
-    // fill(0);
-    // text("NOT INTERACTIVE", width/2, height/2 - 1.3 * PPCM);
+    noStroke();
+    fill(125);
+    rect(width/2 - 2.0*PPCM, height/2 - 2.0*PPCM, 4.0*PPCM, 1.0*PPCM);
+    textAlign(CENTER, CENTER);
+    textFont("Arial", 14);
+    fill(0);
+    text("Swipe left to delete", width/2, height/2 - 1.3 * PPCM);
 
     // Draws the touch input area (4x3cm) -- DO NOT CHANGE SIZE!
     stroke(0, 255, 0);
@@ -247,10 +248,7 @@ function incrementLastLetter(key) {
   let last_char = currently_typed.slice(-1);
   let new_char;
 
-  //TODO: isto pode dar um bug
-  if (last_char == " " || key == 0) {
-    currently_typed = currently_typed.slice(0, -2);
-  } else {
+  if (key!= 0) {
     last_char = last_char.charCodeAt(0);
     switch (last_char) {
       case 99:
@@ -285,40 +283,6 @@ function incrementLastLetter(key) {
   return;
 }
 
-function drawNonInteractive() {
-  // currently_type is a prefix of target_prase
-  if (target_phrase.indexOf(currently_typed) === 0) {
-    //push();
-    // noStroke();
-    noStroke();
-    fill(152, 251, 152);
-    rect(
-      width / 2 - 2.0 * PPCM,
-      height / 2 - 2.0 * PPCM,
-      4.0 * PPCM,
-      1.0 * PPCM
-    );
-    // textAlign(CENTER);
-    // textFont("Arial", 16);
-    // fill(0);
-    // text("DOING GREAT", width / 2, height / 2 - 1.3 * PPCM);
-    //pop();
-  } else {
-    // noStroke();
-    fill(205, 92, 92);
-    noStroke();
-    rect(
-      width / 2 - 2.0 * PPCM,
-      height / 2 - 2.0 * PPCM,
-      4.0 * PPCM,
-      1.0 * PPCM
-    );
-    // textAlign(CENTER);
-    // textFont("Arial", 16);
-    // fill(0);
-    // text("WRONG", width / 2, height / 2 - 1.3 * PPCM);
-  }
-}
 
 // Gets words that resemble the most the word that is being written
 function autocomplete() {
@@ -654,10 +618,10 @@ function windowResized() {
   ARM_HEIGHT = int(11.2 * PPCM);
 
   //ARROW_SIZE     = (int)(2.2  * PPCM);
-  BASE_WIDTH = int(width / 2 - (2.0 - 0.287) * PPCM);
+  BASE_WIDTH = int(width / 2 - 2.0 * PPCM);
   BASE_HEIGHT = int(height / 2 - (1.0 - 0.592) * PPCM);
-  BT_WIDTH = int(1.141 * PPCM);
-  BT_HEIGHT = int(0.641 * PPCM);
+  BT_WIDTH = int(1.333 * PPCM);
+  BT_HEIGHT = int(0.737 * PPCM);
 
   // Starts drawing the watch immediately after we go fullscreen (DO NO CHANGE THIS!)
   draw_finger_arm = true;
