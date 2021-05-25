@@ -156,7 +156,7 @@ function draw2Dkeyboard() {
   fill(0);
 
   if (suggested_words.length !== 0) {
-    
+
     let max_len = Math.max(...suggested_words)
 
     if (max_len >= 8) textFont("Arial", 13);
@@ -174,7 +174,7 @@ function draw2Dkeyboard() {
         text(suggested_words[2], width / 2 + 2 * PPCM, height_words);
         textAlign(CENTER);
         break;
-      
+
       case 2:
         textAlign(LEFT, CENTER);
         text(suggested_words[0], width / 2 - 2 * PPCM, height_words);
@@ -200,22 +200,17 @@ function draw2Dkeyboard() {
 function wordPressed(word_number) {
   correct_word = suggested_words[word_number];
   let i;
-  let min;
 
-  if (correct_word.length > current_word.length) min = current_word.length;
-  else min = correct_word.length;
+  console.log("currently_typed.length = " + currently_typed.length);
+  for (i = currently_typed.length - 1; currently_typed.charAt(i) != " "; i--)
+    if (i == 0){
+      currently_typed = "";
+      break;
+    }
 
-  for (i = 0; i < min && current_word.charAt(i) == correct_word.charAt(i); i++);
-
-  console.log(
-    "Pressed word " +
-      word_number +
-      " and will be inserted >" +
-      correct_word.slice(i) +
-      "<"
-  );
-
-  currently_typed += correct_word.slice(i);
+  if (currently_typed != "")
+    currently_typed = currently_typed.slice(0, i+1);
+  currently_typed += correct_word
   current_word = correct_word;
   autocomplete();
 }
