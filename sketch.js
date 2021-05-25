@@ -46,6 +46,9 @@ let database; // Firebase DB
 // Auto complete endpoint
 const autoCompleteWebServer = "https://auto-complete-dv.herokuapp.com/";
 
+// FIXME: idk if this works
+let canDelete = true
+
 //Our keyboard
 let img_keyboard;
 let last_press;
@@ -201,6 +204,16 @@ function wordPressed(word_number) {
   currently_typed += correct_word.slice(i);
   current_word = correct_word;
   autocomplete();
+}
+
+// Swipe to remove previous letter
+function touchMoved() {
+  if (canDelete) {
+    canDelete = false
+    currently_typed = currently_typed.slice(0, -1)
+    setTimeout(() => {canDelete = true}, 500)
+  }
+  return false
 }
 
 // Receives and processes pressed key
