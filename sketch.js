@@ -605,10 +605,10 @@ function windowResized() {
   ARM_HEIGHT = int(11.2 * PPCM);
 
   //ARROW_SIZE     = (int)(2.2  * PPCM);
-  BASE_WIDTH = int(width / 2 - (2.0 - 0.287) * PPCM);
+  BASE_WIDTH = int(width / 2 - 2.0 * PPCM);
   BASE_HEIGHT = int(height / 2 - (1.0 - 0.592) * PPCM);
-  BT_WIDTH = int(1.141 * PPCM);
-  BT_HEIGHT = int(0.641 * PPCM);
+  BT_WIDTH = int(1.333 * PPCM);
+  BT_HEIGHT = int(0.737 * PPCM);
 
   // Starts drawing the watch immediately after we go fullscreen (DO NO CHANGE THIS!)
   draw_finger_arm = true;
