@@ -206,7 +206,7 @@ function wordPressed(word_number) {
 
   if (currently_typed != "")
     currently_typed = currently_typed.slice(0, i+1);
-  currently_typed += correct_word
+  currently_typed += correct_word + " ";
   current_word = correct_word;
   autocomplete();
 }
@@ -215,9 +215,9 @@ function wordPressed(word_number) {
 function buttonPressed(key) {
   time_press = millis();
 
-  if (key == last_clicked && time_press - last_press < double_click_delay)
-    incrementLastLetter(key);
-  else if (key == 0) currently_typed += " ";
+  if (key == last_clicked && key != 0 && time_press - last_press < double_click_delay)
+    incrementLastLetter();
+  else if (key == 0) currently_typed = currently_typed.slice(0, -1);
   else if (key == 1) currently_typed += "a";
   else if (key == 2) currently_typed += "d";
   else if (key == 3) currently_typed += "g";
@@ -238,42 +238,43 @@ function buttonPressed(key) {
 }
 
 // Changes string to match 2nd or 3rd consecutive click
-function incrementLastLetter(key) {
+function incrementLastLetter() {
   let last_char = currently_typed.slice(-1);
   let new_char;
 
-  if (key!= 0) {
-    last_char = last_char.charCodeAt(0);
-    switch (last_char) {
-      case 99:
-        new_char = "a";
-        break;
-      case 102:
-        new_char = "d";
-        break;
-      case 105:
-        new_char = "g";
-        break;
-      case 108:
-        new_char = "j";
-        break;
-      case 111:
-        new_char = "m";
-        break;
-      case 115:
-        new_char = "p";
-        break;
-      case 118:
-        new_char = "t";
-        break;
-      case 122:
-        new_char = "w";
-        break;
-      default:
-        new_char = String.fromCharCode(last_char + 1);
-    }
-    currently_typed = currently_typed.replace(/.$/, new_char);
+  last_char = last_char.charCodeAt(0);
+  switch (last_char) {
+    case 32:
+      new_char = "t";
+      break;
+    case 99:
+      new_char = "a";
+      break;
+    case 102:
+      new_char = "d";
+      break;
+    case 105:
+      new_char = "g";
+      break;
+    case 108:
+      new_char = "j";
+      break;
+    case 111:
+      new_char = "m";
+      break;
+    case 115:
+      new_char = "p";
+      break;
+    case 118:
+      new_char = " ";
+      break;
+    case 122:
+      new_char = "w";
+      break;
+    default:
+      new_char = String.fromCharCode(last_char + 1);
   }
+  currently_typed = currently_typed.replace(/.$/, new_char);
   return;
 }
 
