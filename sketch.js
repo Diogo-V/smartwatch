@@ -269,6 +269,12 @@ function incrementLastLetter(key) {
       case 122:
         new_char = "w";
         break;
+      case 96:
+        new_char = "t";
+        break;
+      case 96:
+        new_char = "t";
+        break;
       default:
         new_char = String.fromCharCode(last_char + 1);
     }
