@@ -61,7 +61,7 @@ let BT_WIDTH;
 let BT_HEIGHT;
 
 let current_word = "";
-let suggested_words;
+let suggested_words = [];
 
 // Runs once before the setup() and loads our data (images, phrases)
 function preload() {
@@ -143,7 +143,6 @@ function draw2Dkeyboard() {
   //image(leftArrow, width/2 - ARROW_SIZE, height/2, ARROW_SIZE, ARROW_SIZE);
   //image(rightArrow, width/2, height/2, ARROW_SIZE, ARROW_SIZE);
   let height_words = height / 2 - (1.0 - 0.592 / 2) * PPCM;
-  let max_len;
 
   imageMode(CENTER);
   image(
@@ -156,30 +155,44 @@ function draw2Dkeyboard() {
 
   fill(0);
 
-  if (suggested_words.length == 3) {
-    if (
-      suggested_words[0].length > suggested_words[1].length &&
-      suggested_words[0].length > suggested_words[2].length
-    )
-      max_len = suggested_words[0].length;
-    else if (
-      suggested_words[1].length > suggested_words[0].length &&
-      suggested_words[1].length > suggested_words[2].length
-    )
-      max_len = suggested_words[1].length;
-    else max_len = suggested_words[2].length;
+  if (suggested_words.length !== 0) {
+    
+    let max_len = Math.max(...suggested_words)
 
     if (max_len >= 8) textFont("Arial", 13);
     else if (max_len >= 6) textFont("Arial", 17);
     else textFont("Arial", 20);
 
-    textAlign(LEFT, CENTER);
-    text(suggested_words[0], width / 2 - 2 * PPCM, height_words);
-    textAlign(CENTER, CENTER);
-    text(suggested_words[1], width / 2, height_words);
-    textAlign(RIGHT, CENTER);
-    text(suggested_words[2], width / 2 + 2 * PPCM, height_words);
-    //textAlign(CENTER);
+    switch (suggested_words.length) {
+
+      case 3:
+        textAlign(LEFT, CENTER);
+        text(suggested_words[0], width / 2 - 2 * PPCM, height_words);
+        textAlign(CENTER, CENTER);
+        text(suggested_words[1], width / 2, height_words);
+        textAlign(RIGHT, CENTER);
+        text(suggested_words[2], width / 2 + 2 * PPCM, height_words);
+        textAlign(CENTER);
+        break;
+      
+      case 2:
+        textAlign(LEFT, CENTER);
+        text(suggested_words[0], width / 2 - 2 * PPCM, height_words);
+        textAlign(CENTER, CENTER);
+        text(suggested_words[1], width / 2, height_words);
+        textAlign(RIGHT, CENTER);
+        break;
+
+      case 1:
+        textAlign(LEFT, CENTER);
+        text(suggested_words[0], width / 2 - 2 * PPCM, height_words);
+        textAlign(CENTER, CENTER);
+        break;
+
+      default:
+        break
+
+    }
   }
 }
 
