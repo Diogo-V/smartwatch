@@ -176,7 +176,7 @@ function draw2Dkeyboard() {
     text(suggested_words[1], width / 2, height_words);
     textAlign(RIGHT, CENTER);
     text(suggested_words[2], width / 2 + 2 * PPCM, height_words);
-    //textAlign(CENTER);
+    textAlign(CENTER);
   }
 }
 
@@ -261,6 +261,9 @@ function incrementLastLetter(key) {
         break;
       case 122:
         new_char = "w";
+        break;
+      case 96:
+        new_char = " ";
         break;
       default:
         new_char = String.fromCharCode(last_char + 1);
