@@ -74,7 +74,7 @@ function preload() {
   rightArrow = loadImage("data/right.png");
 
   //Loads custom keyboards
-  img_keyboard = loadImage("./keyboards/Versao4.png");
+  img_keyboard = loadImage("./keyboards/Versao5.png");
 
 }
 
