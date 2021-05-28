@@ -74,7 +74,7 @@ function preload() {
   rightArrow = loadImage("data/right.png");
 
   //Loads custom keyboards
-  img_keyboard = loadImage("./keyboards/Versao5.png");
+  img_keyboard = loadImage("./keyboards/Versao4.png");
 
 }
 
@@ -212,11 +212,11 @@ function buttonPressed(key) {
     incrementLastLetter();
   else if (key == 0) currently_typed = currently_typed.slice(0, -1);
   else if (key == 1) currently_typed += "a";
-  else if (key == 2) currently_typed += "d";
-  else if (key == 3) currently_typed += "g";
-  else if (key == 4) currently_typed += "j";
-  else if (key == 5) currently_typed += "m";
-  else if (key == 6) currently_typed += "p";
+  else if (key == 2) currently_typed += "e";
+  else if (key == 3) currently_typed += "i";
+  else if (key == 4) currently_typed += "l";
+  else if (key == 5) currently_typed += "o";
+  else if (key == 6) currently_typed += "s";
   else if (key == 7) currently_typed += "t";
   else if (key == 8) currently_typed += "w";
 
@@ -239,30 +239,111 @@ function incrementLastLetter() {
     case 32:
       new_char = "t";
       break;
-    case 99:
+
+    case 97:
+      new_char = "c";
+      break;  
+
+    case 98:
       new_char = "a";
+      break; 
+
+    case 99:
+      new_char = "b";
       break;
+
+    case 100:
+      new_char = "e";
+      break;
+    
+    case 101:
+    new_char = "f";
+    break;
+
     case 102:
       new_char = "d";
-      break;
+      break;  
+    
+    case 103:
+    new_char = "i";
+    break; 
+
+    case 104:
+    new_char = "g";
+    break; 
+
     case 105:
-      new_char = "g";
+      new_char = "h";
       break;
-    case 108:
+
+    case 106:
+      new_char = "l";
+      break;  
+
+    case 107:
       new_char = "j";
+      break; 
+
+    case 108:
+      new_char = "k";
       break;
-    case 111:
+
+    case 109:
+      new_char = "o";
+      break; 
+
+    case 110:
       new_char = "m";
+      break;   
+
+    case 111:
+      new_char = "n";
       break;
-    case 115:
+
+    case 112:
+      new_char = "q";
+      break; 
+
+    case 113:
+      new_char = "s";
+      break;   
+    
+    case 114:
       new_char = "p";
+      break; 
+
+    case 115:
+      new_char = "r";
       break;
+
+    case 116:
+      new_char = "u";
+      break; 
+    
+    case 117:
+      new_char = "v";
+      break;   
+
     case 118:
       new_char = " ";
       break;
+    
+    case 119:
+      new_char = "y";
+      break; 
+      
+    case 120:
+      new_char = "z";
+      break;
+
+    case 121:
+      new_char = "x";
+      break;  
+
     case 122:
       new_char = "w";
       break;
+      
     default:
       new_char = String.fromCharCode(last_char + 1);
   }
