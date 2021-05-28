@@ -108,7 +108,7 @@ function draw() {
     textAlign(CENTER, CENTER);
     textFont("Arial", 14);
     fill(0);
-    text("Swipe left to delete", width/2, height/2 - 1.3 * PPCM);
+    text("", width/2, height/2 - 1.3 * PPCM);
 
     // Draws the touch input area (4x3cm) -- DO NOT CHANGE SIZE!
     stroke(0, 255, 0);
