@@ -153,29 +153,29 @@ function draw2Dkeyboard() {
 
   if (suggested_words.length !== 0) {
 
-    //let max_len = Math.max(...suggested_words)
+    let max_len = Math.max(...suggested_words)
 
     //if (max_len >= 8) textFont("Arial", 13);
     //else if (max_len >= 6) textFont("Arial", 17);
     //else textFont("Arial", 20);
 
-    textFont("Arial", 0.35 * PPCM)
+    textFont("Arial", 0.35 * PPCM * (1/max_len))
 
     switch (suggested_words.length) {
 
       case 3:
-        textAlign(RIGHT, CENTER);
-        text(suggested_words[2], width / 2 + 2 * PPCM, height_words);
+        textAlign(CENTER, CENTER);
+        text(suggested_words[2], width / 2 + (12/11)*((4/3)*PPCM)/2 , height_words, (4/3)*PPCM);
         textAlign(CENTER);
 
       case 2:
         textAlign(CENTER, CENTER);
-        text(suggested_words[1], width / 2, height_words);
-        textAlign(RIGHT, CENTER);
+        text(suggested_words[1], width / 2 - ((4/3)*PPCM)/2, height_words, (4/3)*PPCM);
+        textAlign(CENTER, CENTER);
 
       case 1:
-        textAlign(LEFT, CENTER);
-        text(suggested_words[0], width / 2 - 2 * PPCM, height_words);
+        textAlign(CENTER, CENTER);
+        text(suggested_words[0], width / 2 - (3/2)*((4/3)*PPCM), height_words, (4/3)*PPCM);
         textAlign(CENTER, CENTER);
 
       default:
