@@ -74,7 +74,7 @@ function preload() {
   rightArrow = loadImage("data/right.png");
 
   //Loads custom keyboards
-  img_keyboard = loadImage("./keyboards/Versao4.png");
+  img_keyboard = loadImage("./keyboards/Versao5.png");
 
 }
 
@@ -189,6 +189,10 @@ function draw2Dkeyboard() {
 function wordPressed(word_number) {
   correct_word = suggested_words[word_number];
   let i;
+
+  if (suggested_words.length < word_number + 1 ){
+    return;
+  }
 
   console.log("currently_typed.length = " + currently_typed.length);
   for (i = currently_typed.length - 1; currently_typed.charAt(i) != " "; i--)
@@ -343,7 +347,7 @@ function incrementLastLetter() {
     case 122:
       new_char = "w";
       break;
-      
+
     default:
       new_char = String.fromCharCode(last_char + 1);
   }
